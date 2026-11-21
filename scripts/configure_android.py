@@ -39,8 +39,8 @@ def patch_gradle() -> None:
     if kts_path.exists():
         text = kts_path.read_text(encoding="utf-8")
 
-        # Ensure compileSdk = 35 for flutter_local_notifications
-        text = re.sub(r"compileSdk\s*=\s*flutter\.compileSdkVersion", "compileSdk = 35", text)
+        # Ensure compileSdk = 36 for flutter_local_notifications
+        text = re.sub(r"compileSdk\s*=\s*flutter\.compileSdkVersion", "compileSdk = 36", text)
 
         # Enable core library desugaring in compileOptions
         if "isCoreLibraryDesugaringEnabled" not in text:
@@ -67,13 +67,13 @@ def patch_gradle() -> None:
             )
 
         kts_path.write_text(text, encoding="utf-8")
-        print("Patched android/app/build.gradle.kts (compileSdk=35, desugaring, multiDex).")
+        print("Patched android/app/build.gradle.kts (compileSdk=36, desugaring, multiDex).")
 
     elif groovy_path.exists():
         text = groovy_path.read_text(encoding="utf-8")
 
-        text = re.sub(r"compileSdk\s*=?\s*flutter\.compileSdkVersion", "compileSdk = 35", text)
-        text = re.sub(r"compileSdkVersion\s+flutter\.compileSdkVersion", "compileSdkVersion 35", text)
+        text = re.sub(r"compileSdk\s*=?\s*flutter\.compileSdkVersion", "compileSdk = 36", text)
+        text = re.sub(r"compileSdkVersion\s+flutter\.compileSdkVersion", "compileSdkVersion 36", text)
 
         if "coreLibraryDesugaringEnabled" not in text:
             text = text.replace(
@@ -97,7 +97,7 @@ def patch_gradle() -> None:
             )
 
         groovy_path.write_text(text, encoding="utf-8")
-        print("Patched android/app/build.gradle (compileSdk=35, desugaring, multiDex).")
+        print("Patched android/app/build.gradle (compileSdk=36, desugaring, multiDex).")
     else:
         raise FileNotFoundError("Neither build.gradle.kts nor build.gradle found in android/app/")
 
